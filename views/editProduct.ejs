@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('partials/head') %>
+
+    <body>
+
+        <%- include('partials/header') %>
+
+
+            <section class="banner">
+                <img src="/images/img-home-banner.jpg" alt="Banner de ofertas">
+            </section>
+
+
+            <main>
+                <h3>Edición de Producto</h3>
+                <section class="ultima-visita">
+              <!-- Acá infantilmente pregunto por si es la primera vez
+            que se ingresa, entonces las variables locales no están presentes
+            Son Undefined
+            -->   
+            <% if (locals.erroresControlados == undefined) { %>
+                <form action="/products/<%=  product.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+               <% } %>
+
+       <!-- Acá se daría el caso que se validaron errores debo tomar
+    productId  para no perder la referencia, es enviado desde el controlador cuando
+    se detectan errores (OJO ARRIBA ESTA product.id )
+    -->           
+               <% if (locals.erroresControlados) { %>
+                <form action="/products/<%=  productId %>?_method=PUT" method="POST" enctype="multipart/form-data">
+               <% } %>
+               
+              
+               <!-- Aquí puedes escribir tu comentario -->
+                    
+                      
+
+
+
+                                        <div class="field">
+                                            <label for="name">Nombres</label>
+                                            <div class="control">
+
+                                                <input type="text" name="name"
+                                                   
+                                                value="<%= locals.camposDevueltos ? camposDevueltos.name  : product.name %>">
+                                            </div>
+
+                                            <div class="danger">
+                                                <!--   cuidado con el If -->
+
+                                                <% if (locals.erroresControlados && erroresControlados.name) { %>
+                                                    <p>
+                                                        <%= erroresControlados.name.msg %>
+                                                    </p>
+                                                    <% } %>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="field">
+                                            <label for="image">Imagen</label>
+                                            <div class="control">
+
+                                          <input type="file" name="image"
+
+                                         value="<%= locals.erroresControlados ? camposDevueltos.oldImage :product.image %>">
+         
+               
+                                         <input type="text" name="oldImage"
+                                                
+                                                value="<%= locals.erroresControlados ? camposDevueltos.oldImage :product.image %>">
+                                              
+                                                   </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="price">Precio</label>
+                                            <div class="control">
+                                                <input type="text" name="price"
+                                                 
+                                                 value="<%= locals.camposDevueltos ? camposDevueltos.price  : product.price %>">
+                                     
+                                                </div>
+ 
+                                            <div class="danger">
+                                                <!--   cuidado con el If -->
+
+                                                <% if (locals.erroresControlados && erroresControlados.price) { %>
+                                                    <p>
+                                                        <%= erroresControlados.price.msg %>
+                                                    </p>
+                                                    <% } %>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="field">
+                                            <label for="descuento">descuento</label>
+                                            <div class="control">
+
+                                                <input type="text" name="descuento" 
+                        
+                                                value="<%= locals.camposDevueltos ? camposDevueltos.descuento : product.descuento %>">
+                                            </div>
+
+                                            <div class="danger">
+                                                <!--   cuidado con el If -->
+
+                                                <% if (locals.erroresControlados && erroresControlados.descuento) { %>
+                                                    <p>
+                                                        <%= erroresControlados.descuento.msg %>
+                                                    </p>
+                                                    <% } %>
+
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="field">
+                                            <div class="control">
+                                                <button type="submit">Editar Producto</button>
+                                            </div>
+                                        </div>
+                    </form>
+                </section>
+
+
+            </main>
+            <%- include('partials/footer') %>
+
+
+    </body>
+
+</html>
